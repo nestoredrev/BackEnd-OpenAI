@@ -1,0 +1,1 @@
+export * from './ortographyCheck.use-case';
