@@ -31,5 +31,5 @@ export const prosConsDicusserUseCase = async (openai: OpenAI, options: Options )
         max_tokens: 1500,  // maximo de consumo de la cuota o salgo al utilizar openAI
       });
     
-      return completion.choices[0].message.content;
+      return completion.choices[0].message;
 }
