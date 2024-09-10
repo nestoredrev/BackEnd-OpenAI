@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Res, HttpStatus, Get, Param, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator } from '@nestjs/common';
 import { GptService } from './gpt.service';
-import { AudioToTextDto, OrtographyDto, ProsConsDiscusserDto, TextoToAudioDto, TranslateDto } from './dtos';
+import { AudioToTextDto, ImageGenerationDto, OrtographyDto, ProsConsDiscusserDto, TextoToAudioDto, TranslateDto } from './dtos';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
 import { diskStorage } from 'multer';
@@ -82,7 +82,6 @@ export class GptController {
       storage: diskStorage({
         destination: './generated/uploads',
         filename: (req, file, callback) => {
-          console.log("🚀 ~ GptController ~ req:", req)
           const fileExtension = file.originalname.split('.').pop();
           const fileName = `${ new Date().getTime() }.${ fileExtension }`; // tambien se puede utilizar el uid para tener un nombre unico para no sobreecribir el fichero
           return callback(null, fileName);
@@ -103,6 +102,13 @@ export class GptController {
   ){
     const { prompt } = audioToTextDto;
     return this.gptService.audioToText(file, prompt);
+  }
+
+  @Post('image-generation')
+  async imageGeneration(
+    @Body() imageGenerationDto: ImageGenerationDto
+  ){
+    return await this.gptService.imageGeneration(imageGenerationDto);
   }
 
 }

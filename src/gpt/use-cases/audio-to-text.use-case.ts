@@ -12,7 +12,6 @@ interface Options {
 export const audioToTextUseCase = async (openai: OpenAI, options: Options ) => {
 
     const { audioFile, prompt } = options;
-    console.log("🚀 ~ audioToTextUseCase ~ options:", options)
     const response = openai.audio.transcriptions.create({
         model: 'whisper-1',
         file: fs.createReadStream( audioFile.path ),
