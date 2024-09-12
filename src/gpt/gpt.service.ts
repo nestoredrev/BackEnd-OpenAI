@@ -71,4 +71,15 @@ export class GptService {
     })
   }
 
+  getGeneratedImage( idImage:string ){
+
+    const filePath = path.resolve( __dirname,'../../generated/images', `${idImage}.png` );
+
+    const wasFound = fs.existsSync( filePath );
+
+    if( !wasFound ) throw new NotFoundException(`Archivo con id: ${idImage} no fue encontrado`);
+
+    return filePath;
+  }
+
 }
